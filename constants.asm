@@ -1,3 +1,54 @@
+; ---------------------------------------------------------------------------
+; size variables - you'll get an informational error if you need to change these...
+; they are all in units of bytes
+Size_of_DAC_samples =		$3000
+Size_of_SEGA_sound =		$6174
+	if FixBugs
+; To be on the safe side, we'll use a larger guess size.
+Size_of_Snd_driver_guess =	$F00 ; approximate post-compressed size of the Z80 sound driver
+	else
+Size_of_Snd_driver_guess =	$E98 ; approximate post-compressed size of the Z80 sound driver
+	endif
+
+; ---------------------------------------------------------------------------
+; some variables and functions to help define those constants (redefined before a new set of IDs)
+offset :=	0		; this is the start of the pointer table
+ptrsize :=	1		; this is the size of a pointer (should be 1 if the ID is a multiple of the actual size)
+idstart :=	0		; value to add to all IDs
+
+; function using these variables
+id function ptr,((ptr-offset)/ptrsize+idstart)
+
+MusID__First =		$81
+MusID_ExtraLife =	$98
+MusID__End =		$A0
+
+SndID__First =		$A0
+SndID_PushBlock =	$A7		; A7
+SndID_Ring =		$B5		; B5
+SndID_RingRight =	$B5		; B5
+SndID_RingLeft =	$CE		; CE
+SndID_Gloop =		$DA		; DA
+SndID_SpindashRev =	$E0		; E0
+SndID__End =		$EC
+
+; Sound command IDs
+offset :=	zCommandIndex
+ptrsize :=	4
+idstart :=	$F8
+
+CmdID__First = idstart
+MusID_StopSFX =		id(CmdPtr_StopSFX)	; F8
+MusID_FadeOut =		id(CmdPtr_FadeOut)	; F9
+SndID_SegaSound =	id(CmdPtr_SegaSound)	; FA
+MusID_SpeedUp =		id(CmdPtr_SpeedUp)	; FB
+MusID_SlowDown =	id(CmdPtr_SlowDown)	; FC
+MusID_Stop =		id(CmdPtr_Stop)		; FD
+CmdID__End =		id(CmdPtr__End)		; FE
+
+MusID_Pause =		$7E+$80			; FE
+MusID_Unpause =		$7F+$80			; FF
+
 ; Constants
 
 gm_SEGALogo					   equ $00
@@ -188,9 +239,6 @@ IO_Port_0_Control			   equ $00A10008
 IO_Port_1_Control			   equ $00A1000A
 IO_Expansion_Control		   equ $00A1000C
 
-Z80_Bus_Request				   equ $00A11100
-Z80_Reset					   equ $00A11200
-
 ; VDP
 
 VDP_Data_Port				   equ $00C00000
@@ -292,3 +340,59 @@ Init_Flag					   equ ramaddr($FFFFFFFC)
 
 ; CRAM
 Color_RAM_Address			   equ $C0000000
+
+; ---------------------------------------------------------------------------
+; Clocks
+Master_Clock	= 53693175
+M68000_Clock	= Master_Clock/7
+Z80_Clock		= Master_Clock/15
+FM_Sample_Rate	= M68000_Clock/(6*6*4)
+PSG_Sample_Rate = Z80_Clock/16
+
+; ---------------------------------------------------------------------------
+; VDP addressses
+VDP_data_port =			$C00000 ; (8=r/w, 16=r/w)
+VDP_control_port =		$C00004 ; (8=r/w, 16=r/w)
+PSG_input =			$C00011
+
+; ---------------------------------------------------------------------------
+; Z80 addresses
+Z80_RAM =			$A00000 ; start of Z80 RAM
+Z80_RAM_End =			$A02000 ; end of non-reserved Z80 RAM
+Z80_Bus_Request =		$A11100
+Z80_Reset =			$A11200
+
+Security_Addr =			$A14000
+
+; ---------------------------------------------------------------------------
+; I/O Area
+HW_Version =			$A10001
+HW_Port_1_Data =		$A10003
+HW_Port_2_Data =		$A10005
+HW_Expansion_Data =		$A10007
+HW_Port_1_Control =		$A10009
+HW_Port_2_Control =		$A1000B
+HW_Expansion_Control =		$A1000D
+HW_Port_1_TxData =		$A1000F
+HW_Port_1_RxData =		$A10011
+HW_Port_1_SCtrl =		$A10013
+HW_Port_2_TxData =		$A10015
+HW_Port_2_RxData =		$A10017
+HW_Port_2_SCtrl =		$A10019
+HW_Expansion_TxData =		$A1001B
+HW_Expansion_RxData =		$A1001D
+HW_Expansion_SCtrl =		$A1001F
+
+; ---------------------------------------------------------------------------
+; VRAM and tile art base addresses.
+; VRAM Reserved regions.
+VRAM_Plane_A_Name_Table				= $C000	; Extends until $CFFF
+VRAM_Plane_B_Name_Table				= $E000	; Extends until $EFFF
+VRAM_Plane_A_Name_Table_2P			= $A000	; Extends until $AFFF
+VRAM_Plane_B_Name_Table_2P			= $8000	; Extends until $8FFF
+VRAM_Plane_Window_Name_Table		= $A000 ; Extends until $FFFF
+VRAM_Plane_Table_Size				= $1000	; 64 cells x 32 cells x 2 bytes per cell
+VRAM_Sprite_Attribute_Table			= $F800	; Extends until $FA7F
+VRAM_Sprite_Attribute_Table_Size	= $280	; 640 bytes
+VRAM_Horiz_Scroll_Table				= $FC00	; Extends until $FF7F
+VRAM_Horiz_Scroll_Table_Size		= $380	; 224 lines * 2 bytes per entry * 2 PNTs

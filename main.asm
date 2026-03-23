@@ -40,6 +40,15 @@ PaddingOptimization = 0|AllOptimizations
 ; Simplifying macros and functions
 	include	"macros.asm"
 
+; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+; Expressing SMPS bytecode in a portable and human-readable form
+FixMusicAndSFXDataBugs = FixBugs
+SonicDriverVer = 2 ; Tell SMPS2ASM that we are targetting Sonic 2's sound driver
+	include "sound/_smps2asm_inc.asm"
+
+; >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+; start of ROM
+
 		dc.l	StackPointer			; Initial stack pointer value
 		dc.l	ROM_Prog_Start			; Start of our program in ROM
 		dc.l	BusError		; Bus error
@@ -528,12 +537,9 @@ VBlank_00:							   ; Offset_0x000B82
 		beq.s	Offset_0x000BBC
 		cmpi.b	#gm_PlayMode, (Game_Mode).w			   ; $0C ; $FFFFF600
 		beq.s	Offset_0x000BBC
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x000BA2:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x000BA2
+		stopZ80
 		jsr		(Sound_Driver_Input).l		   ; Offset_0x00166C
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		bra.s	Offset_0x000B5E
 Offset_0x000BBC:
 		tst.b	(Water_Level_Flag).w				 ; $FFFFF730
@@ -546,10 +552,7 @@ Offset_0x000BD6:
 		dbf	D0, Offset_0x000BD6
 Offset_0x000BDA:
 		move.w	#$0001, ($FFFFF644).w
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x000BE8:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x000BE8
+		stopZ80
 		tst.b	($FFFFF64E).w
 		bne.s	Offset_0x000C1E
 		lea		(VDP_Control_Port), A5				 ; $00C00004
@@ -572,7 +575,7 @@ Offset_0x000C42:
 		move.w	($FFFFF624).w, (A5)
 		move.w	#$8230, (VDP_Control_Port)			 ; $00C00004
 		jsr		(Sound_Driver_Input).l		   ; Offset_0x00166C
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		bra.w	Offset_0x000B5E
 Offset_0x000C60:
 		move.w	(VDP_Control_Port), D0				 ; $00C00004
@@ -588,10 +591,7 @@ Offset_0x000C88:
 		move.w	($FFFFF624).w, (VDP_Control_Port)			 ; $00C00004
 		move.w	#$8230, (VDP_Control_Port)			 ; $00C00004
 		move.l	($FFFFF61E).w, ($FFFFEEEC).w
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x000CAC:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x000CAC
+		stopZ80
 		lea		(VDP_Control_Port), A5				 ; $00C00004
 		move.l	#$94019340, (A5)
 		move.l	#$96FC9500, (A5)
@@ -600,7 +600,7 @@ Offset_0x000CAC:
 		move.w	#$0083, ($FFFFF640).w
 		move.w	($FFFFF640).w, (A5)
 		jsr		(Sound_Driver_Input).l		   ; Offset_0x00166C
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		bra.w	Offset_0x000B5E
 ;-------------------------------------------------------------------------------
 VBlank_02:							   ; Offset_0x000CEC
@@ -623,12 +623,9 @@ VBlank_14:							   ; Offset_0x000D26
 		move.b	($FFFFFE0F).w, D0
 		andi.w	#$000F, D0
 		bne.s	Offset_0x000D4E
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x000D38:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x000D38
+		stopZ80
 		bsr.w	Control_Ports_Read			   ; Offset_0x0016F8
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 Offset_0x000D4E:
 		tst.w	($FFFFF614).w
 		beq.w	Offset_0x000D5A
@@ -654,10 +651,7 @@ VBlank_10:							   ; Offset_0x000D78
 		beq.w	Offset_0x000EA4
 ;-------------------------------------------------------------------------------
 VBlank_08:							   ; Offset_0x000D82
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x000D8A:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x000D8A
+		stopZ80
 		bsr.w	Control_Ports_Read			   ; Offset_0x0016F8
 		tst.b	($FFFFF64E).w
 		bne.s	Offset_0x000DC4
@@ -696,7 +690,7 @@ Offset_0x000DE8:
 		move.w	($FFFFF640).w, (A5)
 		bsr.w	Process_DMA					   ; Offset_0x001A42
 		jsr		(Sound_Driver_Input).l		   ; Offset_0x00166C
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		movem.l (Camera_X).w, D0-D7					 ; $FFFFEE00
 		movem.l D0-D7, ($FFFFEE60).w
 		movem.l (Camera_X_2).w, D0-D7				 ; $FFFFEE20
@@ -722,10 +716,7 @@ Offset_0x000EA4:
 		rts
 ;-------------------------------------------------------------------------------
 VBlank_0A:							   ; Offset_0x000EAA
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x000EB2:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x000EB2
+		stopZ80
 		bsr.w	Control_Ports_Read			   ; Offset_0x0016F8
 		bsr.w	Offset_0x001114
 		lea		(VDP_Control_Port), A5				 ; $00C00004
@@ -801,7 +792,7 @@ Offset_0x000FC0:
 		eori.b	#$01, ($FFFF9B0C).w
 Offset_0x000FC6:
 		bsr.w	Process_DMA					   ; Offset_0x001A42
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		bsr.w	Offset_0x001C92
 		tst.w	($FFFFF614).w
 		beq.w	Offset_0x000FE2
@@ -982,10 +973,7 @@ Offset_0x0012BA:
 ;-------------------------------------------------------------------------------
 VBlank_0C:							   ; Offset_0x0012D8
 VBlank_18:
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x0012E0:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x0012E0
+		stopZ80
 		bsr.w	Control_Ports_Read			   ; Offset_0x0016F8
 		tst.b	($FFFFF64E).w
 		bne.s	Offset_0x00131A
@@ -1023,7 +1011,7 @@ Offset_0x00133E:
 		move.w	($FFFFF640).w, (A5)
 		bsr.w	Process_DMA					   ; Offset_0x001A42
 		jsr		(Sound_Driver_Input).l		   ; Offset_0x00166C
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		movem.l (Camera_X).w, D0-D7					 ; $FFFFEE00
 		movem.l D0-D7, ($FFFFEE60).w
 		movem.l (Scroll_Flag_Array).w, D0/D1		 ; $FFFFEE50
@@ -1045,10 +1033,7 @@ VBlank_12:							   ; Offset_0x0013D4
 		bra.w	Offset_0x001C76
 ;-------------------------------------------------------------------------------
 VBlank_16:							   ; Offset_0x0013E0
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x0013E8:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x0013E8
+		stopZ80
 		bsr.w	Control_Ports_Read			   ; Offset_0x0016F8
 		lea		(VDP_Control_Port), A5				 ; $00C00004
 		move.l	#$94009340, (A5)
@@ -1072,17 +1057,14 @@ Offset_0x0013E8:
 		move.w	#$0083, ($FFFFF640).w
 		move.w	($FFFFF640).w, (A5)
 		jsr		(Sound_Driver_Input).l		   ; Offset_0x00166C
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		tst.w	($FFFFF614).w
 		beq.w	Offset_0x00147C
 		subq.w	#$01, ($FFFFF614).w
 Offset_0x00147C:
 		rts
 Offset_0x00147E:
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x001486:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x001486
+		stopZ80
 		bsr.w	Control_Ports_Read			   ; Offset_0x0016F8
 		tst.b	($FFFFF64E).w
 		bne.s	Offset_0x0014C0
@@ -1118,7 +1100,7 @@ Offset_0x0014E4:
 		move.w	#$0083, ($FFFFF640).w
 		move.w	($FFFFF640).w, (A5)
 		jsr		(Sound_Driver_Input).l		   ; Offset_0x00166C
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		rts
 ;===============================================================================
 ; Interrupção Vertical
@@ -1147,10 +1129,7 @@ Offset_0x001556:
 		move.w	#$8228, (VDP_Control_Port)			 ; $00C00004
 		move.l	#$40000010, (VDP_Control_Port)		 ; $00C00004
 		move.l	($FFFFEEEC).w, (VDP_Data_Port)		 ; $00C00000
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Offset_0x001592:
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Offset_0x001592
+		stopZ80
 		lea		(VDP_Control_Port), A5				 ; $00C00004
 		move.l	#$94019340, (A5)
 		move.l	#$96EE9580, (A5)
@@ -1158,7 +1137,7 @@ Offset_0x001592:
 		move.w	#$7800, (A5)
 		move.w	#$0083, ($FFFFF640).w
 		move.w	($FFFFF640).w, (A5)
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 Offset_0x0015C8:
 		move.w	(VDP_Control_Port), D0				 ; $00C00004
 		andi.w	#$0004, D0
@@ -1281,15 +1260,12 @@ J_VBlank_Sonic_SEGA_Logo:					   ; Offset_0x0016C2
 ; ->>>
 ;===============================================================================
 Control_Ports_Init:							   ; Offset_0x0016C8
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-Control_Ports_Init_Z80Wait:					   ; Offset_0x0016D0
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	Control_Ports_Init_Z80Wait			   ; Offset_0x0016D0
+		stopZ80
 		moveq	#$40, D0
 		move.b	D0, (IO_Port_0_Control+$0001)		 ; $00A10009
 		move.b	D0, (IO_Port_1_Control+$0001)		 ; $00A1000B
 		move.b	D0, (IO_Expansion_Control+$0001)			 ; $00A1000D
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		rts
 ;===============================================================================
 ; Inicialização das portas 0, 1 e expansão
@@ -1385,10 +1361,7 @@ VDPRegSetup_Array:							   ; Offset_0x0017BE
 ; ->>>
 ;===============================================================================
 ClearScreen:						   ; Offset_0x0017E4
-		move.w	#$0100, (Z80_Bus_Request)			 ; $00A11100
-ClearScreen_Z80Wait:						   ; Offset_0x0017EC
-		btst	#$00, (Z80_Bus_Request)				 ; $00A11100
-		bne.s	ClearScreen_Z80Wait			   ; Offset_0x0017EC
+		stopZ80
 		lea		(VDP_Control_Port), A5				 ; $00C00004
 		move.w	#$8F01, (A5)
 		move.l	#$940F93FF, (A5)
@@ -1439,7 +1412,7 @@ ClearScreen_ClearBuffer1:					   ; Offset_0x001898
 ClearScreen_ClearBuffer2:					   ; Offset_0x0018A8
 		move.l	D0, (A1)+
 		dbf	D1, ClearScreen_ClearBuffer2		   ; Offset_0x0018A8
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		rts
 ;===============================================================================
 ; ClearScreen
@@ -1465,7 +1438,7 @@ J_SoundDriverLoad:							   ; Offset_0x0018B8
 		nop
 		nop
 		move.w	#$0100, (Z80_Reset)					 ; $00A11200
-		move.w	#$0000, (Z80_Bus_Request)			 ; $00A11100
+		startZ80
 		rts
 ;-------------------------------------------------------------------------------
 Play_Music:							   ; Offset_0x00190C
@@ -32638,32 +32611,51 @@ Snd_Driver:
 	padding off
 	!org (Snd_Driver+Size_of_Snd_driver_guess) ; don't worry; I know what I'm doing
 Snd_Driver_End:
-;-------------------------------------------------------------------------------
-		cnop	0, $ED000
+; ---------------------------------------------------------------------------
+; Filler (free space)
+; ---------------------------------------------------------------------------
+	; the DAC data has to line up with the end of the bank.
+
+	; actually it only has to fit within one bank,but we'll line it up to the end anyway
+	; because the padding gives the sound driver some room to grow
+	cnop -Size_of_DAC_samples,$8000
+; ---------------------------------------------------------------------------
+; DAC samples
+; ---------------------------------------------------------------------------
 DACSamples_Start:
 DAC_Sample01:						   ; Offset_0x0ED000
-		binclude	"data\sounds\DAC_00.bin"
+		binclude	"sound/DAC_00.bin"
 DAC_Sample01_End:
 DAC_Sample02:						   ; Offset_0x0ED294
-		binclude	"data\sounds\DAC_01.bin"
+		binclude	"sound/DAC_01.bin"
 DAC_Sample02_End:
 DAC_Sample03:						   ; Offset_0x0ED9B7
-		binclude	"data\sounds\DAC_02.bin"
+		binclude	"sound/DAC_02.bin"
 DAC_Sample03_End:
 DAC_Sample04:						   ; Offset_0x0EE56C
-		binclude	"data\sounds\DAC_03.bin"
+		binclude	"sound/DAC_03.bin"
 DAC_Sample04_End:
 DAC_Sample05:						   ; Offset_0x0EED7A
-		binclude	"data\sounds\DAC_04.bin"
+		binclude	"sound/DAC_04.bin"
 DAC_Sample05_End:
 DAC_Sample06:						   ; Offset_0x0EF2F0
-		binclude	"data\sounds\DAC_05.bin"
+		binclude	"sound/DAC_05.bin"
 DAC_Sample06_End:
 DAC_Sample07:						   ; Offset_0x0EFA3C
-		binclude	"data\sounds\DAC_06.bin"
+		binclude	"sound/DAC_06.bin"
 DAC_Sample07_End:
 DACSamples_End:
-;-------------------------------------------------------------------------------
+
+	if DACSamples_End - DACSamples_Start > $8000
+		fatal "DAC samples must fit within $8000 bytes,but you have $/{DACSamples_End-DACSamples_Start } bytes of DAC samples."
+	endif
+	if DACSamples_End - DACSamples_Start > Size_of_DAC_samples
+		fatal "Size_of_DAC_samples = $/{Size_of_DAC_samples},but you have $/{DACSamples_End-DACSamples_Start} bytes of DAC samples."
+	endif
+
+; ---------------------------------------------------------------------------
+; Music pointers
+; ---------------------------------------------------------------------------
 
 music_ptr macro DATA
 DATA.pointer label *
@@ -32678,24 +32670,42 @@ MusicPoint1:	startBank
 		music_ptr	Mus_Drowning	; $9F
 		music_ptr	Mus_Credits		; $9E
 Mus_ExtraLife:							   ; Offset_0x0F000C
-		binclude	"data\sounds\1up_98.snd"
+		include	"sound/music/98 - Extra Life.asm"
 Mus_Continue:						   ; Offset_0x0F00F9
-		binclude	"data\sounds\cont_9c.snd"
+		include	"sound/music/9C - Continue.asm"
 Mus_Emerald:							   ; Offset_0x0F0256
-		binclude	"data\sounds\emrld_9d.snd"
+		include	"sound/music/9D - Got Emerald.asm"
 Mus_HPZ:					   ; Offset_0x0F0324
-		binclude	"data\sounds\hpz_90.snd"
+		include	"sound/music/90 - HPZ.asm"
 Mus_Drowning:						   ; Offset_0x0F0583
-		binclude	"data\sounds\pnc_9f.snd"
+		include	"sound/music/9F - Drowning.asm"
 Mus_Credits:						   ; Offset_0x0F06AD
-		binclude	"data\sounds\credt_9e.snd"
+		include	"sound/music/9E - Credits.asm"
 
 	finishBank
-;-------------------------------------------------------------------------------
-		cnop	0, $F1E8C
+; ----------------------------------------------------------------------------------
+; Filler (free space)
+; ----------------------------------------------------------------------------------
+	; the PCM data has to line up with the end of the bank.
+	cnop -Size_of_SEGA_sound,$8000
+; -------------------------------------------------------------------------------
+; Sega Intro Sound
+; 8-bit unsigned raw audio at 16Khz
+; -------------------------------------------------------------------------------
 Sega_Snd:							   ; Offset_0x0F1E8C
-		binclude	"data\sounds\sega.snd"
+		binclude	"sound/sega.snd"
 Sega_Snd_End:
+
+	if Sega_Snd_End - Sega_Snd > $8000
+		fatal "Sega sound must fit within $8000 bytes,but you have a $/{Sega_Snd_End-Sega_Snd} byte Sega sound."
+	endif
+	if Sega_Snd_End - Sega_Snd > Size_of_SEGA_sound
+		fatal "Size_of_SEGA_sound = $/{Size_of_SEGA_sound},but you have a $/{Sega_Snd_End-Sega_Snd} byte Sega sound."
+	endif
+
+; ------------------------------------------------------------------------------
+; Music pointers
+; ------------------------------------------------------------------------------
 
 MusicPoint2:	startBank
 		music_ptr	Mus_OOZ		; $88
@@ -32724,55 +32734,55 @@ MusicPoint2:	startBank
 		music_ptr	Mus_ActClear	; $9A
 		music_ptr	Mus_GameOver	; $9B
 Mus_OOZ:						   ; Offset_0x0F8032
-		binclude	"data\sounds\ooz_88.snd"
+		include	"sound/music/88 - CNZ 2P.asm"
 Mus_GHZ:							   ; Offset_0x0F85B4
-		binclude	"data\sounds\ghz_82.snd"
+		include	"sound/music/82 - EHZ.asm"
 Mus_MTZ:							   ; Offset_0x0F8D26
-		binclude	"data\sounds\mz_85.snd"
+		include	"sound/music/85 - MTZ.asm"
 Mus_CNZ:							   ; Offset_0x0F92A1
-		binclude	"data\sounds\cnz_89.snd"
+		include	"sound/music/89 - CNZ.asm"
 Mus_DHZ:							   ; Offset_0x0F99BE
-		binclude	"data\sounds\dhz_8b.snd"
+		include	"sound/music/8B - MCZ.asm"
 Mus_DHZ2P:					   ; Offset_0x0FA05E
-		binclude	"data\sounds\hpz_83.snd"
+		include	"sound/music/83 - MCZ 2P.asm"
 Mus_NGHZ:						   ; Offset_0x0FA541
-		binclude	"data\sounds\nghz_87.snd"
+		include	"sound/music/87 - ARZ.asm"
 Mus_DEZ:							   ; Offset_0x0FACCE
-		binclude	"data\sounds\dez_8a.snd"
+		include	"sound/music/8A - DEZ.asm"
 Mus_SpecStg:						   ; Offset_0x0FB1B5
-		binclude	"data\sounds\ss_92.snd"
+		include	"sound/music/92 - Special Stage.asm"
 Mus_LevelSel:					   ; Offset_0x0FB7BC
-		binclude	"data\sounds\menu_91.snd"
+		include	"sound/music/91 - Options.asm"
 Mus_Ending:							   ; Offset_0x0FB937
-		binclude	"data\sounds\endsq_95.snd"
+		include	"sound/music/95 - Ending.asm"
 Mus_FinalBoss:							   ; Offset_0x0FBF30
-		binclude	"data\sounds\dezfb_94.snd"
+		include	"sound/music/94 - Final Boss.asm"
 Mus_CPZ:						   ; Offset_0x0FC268
-		binclude	"data\sounds\cpz_8e.snd"
+		include	"sound/music/8E - CPZ.asm"
 Mus_Boss:							   ; Offset_0x0FC8B3
-		binclude	"data\sounds\boss_93.snd"
+		include	"sound/music/93 - Boss.asm"
 Mus_SCZ:							   ; Offset_0x0FCB85
-		binclude	"data\sounds\scz_8d.snd"
+		include	"sound/music/8D - SCZ.asm"
 Mus_OOZ2:						   ; Offset_0x0FCF88
-		binclude	"data\sounds\ooz_84.snd"
+		include	"sound/music/84 - OOZ.asm"
 Mus_SFZ:							   ; Offset_0x0FD40C
-		binclude	"data\sounds\sfz_8f.snd"
+		include	"sound/music/8F - WFZ.asm"
 Mus_GHZ2P:				   ; Offset_0x0FD839
-		binclude	"data\sounds\ghzvs_8c.snd"
+		include	"sound/music/8C - EHZ 2P.asm"
 Mus_2PResults:					   ; Offset_0x0FDD52
-		binclude	"data\sounds\vsres_81.snd"
+		include	"sound/music/81 - 2 Player Menu.asm"
 Mus_SuperSonic:							   ; Offset_0x0FE1B5
-		binclude	"data\sounds\super_96.snd"
+		include	"sound/music/96 - Super Sonic.asm"
 Mus_HTZ:						   ; Offset_0x0FE4A8
-		binclude	"data\sounds\htz_86.snd"
+		include	"sound/music/86 - HTZ.asm"
 Mus_Invinc:						   ; Offset_0x0FE930
-		binclude	"data\sounds\invcb_97.snd"
+		include	"sound/music/97 - Invincible.asm"
 Mus_Title:							   ; Offset_0x0FEAFB
-		binclude	"data\sounds\tscr_99.snd"
+		include	"sound/music/99 - Title Screen.asm"
 Mus_ActClear:						   ; Offset_0x0FECED
-		binclude	"data\sounds\lres_9A.snd"
+		include	"sound/music/9A - End of Act.asm"
 Mus_GameOver:					   ; Offset_0x0FEE42
-		binclude	"data\sounds\tgovr_9B.snd"
+		include	"sound/music/9B - Game Over.asm"
 ;-------------------------------------------------------------------------------
 Sfx_A0_Ptr	 equ	 (Sfx_A0&$FFFF)|$8000
 Sfx_A1_Ptr	 equ	 (Sfx_A1&$FFFF)|$8000
@@ -32930,157 +32940,157 @@ SoundIndex:						   ; Offset_0x0FEF91
 		dc.w	(((Sfx_EB_Ptr>>$08)|(Sfx_EB_Ptr<<$08))&$FFFF)
 ;-------------------------------------------------------------------------------
 Sfx_A0:								   ; Offset_0x0FF029
-		binclude	"data\sounds\sfx_A0.snd"
+		binclude	"sound/sfx_A0.snd"
 Sfx_A1:								   ; Offset_0x0FF03F
-		binclude	"data\sounds\sfx_A1.snd"
+		binclude	"sound/sfx_A1.snd"
 Sfx_A2:								   ; Offset_0x0FF069
-		binclude	"data\sounds\sfx_A2.snd"
+		binclude	"sound/sfx_A2.snd"
 Sfx_A3:								   ; Offset_0x0FF088
-		binclude	"data\sounds\sfx_A3.snd"
+		binclude	"sound/sfx_A3.snd"
 Sfx_A4:								   ; Offset_0x0FF0BA
-		binclude	"data\sounds\sfx_A4.snd"
+		binclude	"sound/sfx_A4.snd"
 Sfx_A5:								   ; Offset_0x0FF0EF
-		binclude	"data\sounds\sfx_A5.snd"
+		binclude	"sound/sfx_A5.snd"
 Sfx_A6:								   ; Offset_0x0FF11B
-		binclude	"data\sounds\sfx_A6.snd"
+		binclude	"sound/sfx_A6.snd"
 Sfx_A7:								   ; Offset_0x0FF14A
-		binclude	"data\sounds\sfx_A7.snd"
+		binclude	"sound/sfx_A7.snd"
 Sfx_A8:								   ; Offset_0x0FF179
-		binclude	"data\sounds\sfx_A8.snd"
+		binclude	"sound/sfx_A8.snd"
 Sfx_A9:								   ; Offset_0x0FF193
-		binclude	"data\sounds\sfx_A9.snd"
+		binclude	"sound/sfx_A9.snd"
 Sfx_AA:								   ; Offset_0x0FF1A5
-		binclude	"data\sounds\sfx_AA.snd"
+		binclude	"sound/sfx_AA.snd"
 Sfx_AB:								   ; Offset_0x0FF1E6
-		binclude	"data\sounds\sfx_AB.snd"
+		binclude	"sound/sfx_AB.snd"
 Sfx_AC:								   ; Offset_0x0FF205
-		binclude	"data\sounds\sfx_AC.snd"
+		binclude	"sound/sfx_AC.snd"
 Sfx_AD:								   ; Offset_0x0FF239
-		binclude	"data\sounds\sfx_AD.snd"
+		binclude	"sound/sfx_AD.snd"
 Sfx_AE:								   ; Offset_0x0FF26F
-		binclude	"data\sounds\sfx_AE.snd"
+		binclude	"sound/sfx_AE.snd"
 Sfx_AF:								   ; Offset_0x0FF2B9
-		binclude	"data\sounds\sfx_AF.snd"
+		binclude	"sound/sfx_AF.snd"
 Sfx_B0:								   ; Offset_0x0FF2E6
-		binclude	"data\sounds\sfx_B0.snd"
+		binclude	"sound/sfx_B0.snd"
 Sfx_B1:								   ; Offset_0x0FF317
-		binclude	"data\sounds\sfx_B1.snd"
+		binclude	"sound/sfx_B1.snd"
 Sfx_B2:								   ; Offset_0x0FF343
-		binclude	"data\sounds\sfx_B2.snd"
+		binclude	"sound/sfx_B2.snd"
 Sfx_B3:								   ; Offset_0x0FF392
-		binclude	"data\sounds\sfx_B3.snd"
+		binclude	"sound/sfx_B3.snd"
 Sfx_B4:								   ; Offset_0x0FF3C3
-		binclude	"data\sounds\sfx_B4.snd"
+		binclude	"sound/sfx_B4.snd"
 Sfx_B5:								   ; Offset_0x0FF41E
-		binclude	"data\sounds\sfx_B5.snd"
+		binclude	"sound/sfx_B5.snd"
 Sfx_B6:								   ; Offset_0x0FF433
-		binclude	"data\sounds\sfx_B6.snd"
+		binclude	"sound/sfx_B6.snd"
 Sfx_B7:								   ; Offset_0x0FF450
-		binclude	"data\sounds\sfx_B7.snd"
+		binclude	"sound/sfx_B7.snd"
 Sfx_B8:								   ; Offset_0x0FF48B
-		binclude	"data\sounds\sfx_B8.snd"
+		binclude	"sound/sfx_B8.snd"
 Sfx_B9:								   ; Offset_0x0FF4A8
-		binclude	"data\sounds\sfx_B9.snd"
+		binclude	"sound/sfx_B9.snd"
 Sfx_BA:								   ; Offset_0x0FF4F2
-		binclude	"data\sounds\sfx_BA.snd"
+		binclude	"sound/sfx_BA.snd"
 Sfx_BB:								   ; Offset_0x0FF51A
-		binclude	"data\sounds\sfx_BB.snd"
+		binclude	"sound/sfx_BB.snd"
 Sfx_BC:								   ; Offset_0x0FF545
-		binclude	"data\sounds\sfx_BC.snd"
+		binclude	"sound/sfx_BC.snd"
 Sfx_BD:								   ; Offset_0x0FF586
-		binclude	"data\sounds\sfx_BD.snd"
+		binclude	"sound/sfx_BD.snd"
 Sfx_BE:								   ; Offset_0x0FF5D9
-		binclude	"data\sounds\sfx_BE.snd"
+		binclude	"sound/sfx_BE.snd"
 Sfx_BF:								   ; Offset_0x0FF613
-		binclude	"data\sounds\sfx_BF.snd"
+		binclude	"sound/sfx_BF.snd"
 Sfx_C0:								   ; Offset_0x0FF685
-		binclude	"data\sounds\sfx_C0.snd"
+		binclude	"sound/sfx_C0.snd"
 Sfx_C1:								   ; Offset_0x0FF6B3
-		binclude	"data\sounds\sfx_C1.snd"
+		binclude	"sound/sfx_C1.snd"
 Sfx_C2:								   ; Offset_0x0FF6ED
-		binclude	"data\sounds\sfx_C2.snd"
+		binclude	"sound/sfx_C2.snd"
 Sfx_C3:								   ; Offset_0x0FF6FE
-		binclude	"data\sounds\sfx_C3.snd"
+		binclude	"sound/sfx_C3.snd"
 Sfx_C4:								   ; Offset_0x0FF778
-		binclude	"data\sounds\sfx_C4.snd"
+		binclude	"sound/sfx_C4.snd"
 Sfx_C5:								   ; Offset_0x0FF7A0
-		binclude	"data\sounds\sfx_C5.snd"
+		binclude	"sound/sfx_C5.snd"
 Sfx_C6:								   ; Offset_0x0FF807
-		binclude	"data\sounds\sfx_C6.snd"
+		binclude	"sound/sfx_C6.snd"
 Sfx_C7:								   ; Offset_0x0FF82F
-		binclude	"data\sounds\sfx_C7.snd"
+		binclude	"sound/sfx_C7.snd"
 Sfx_C8:								   ; Offset_0x0FF85D
-		binclude	"data\sounds\sfx_C8.snd"
+		binclude	"sound/sfx_C8.snd"
 Sfx_C9:								   ; Offset_0x0FF86E
-		binclude	"data\sounds\sfx_C9.snd"
+		binclude	"sound/sfx_C9.snd"
 Sfx_CA:								   ; Offset_0x0FF89B
-		binclude	"data\sounds\sfx_CA.snd"
+		binclude	"sound/sfx_CA.snd"
 Sfx_CB:								   ; Offset_0x0FF8C8
-		binclude	"data\sounds\sfx_CB.snd"
+		binclude	"sound/sfx_CB.snd"
 Sfx_CC:								   ; Offset_0x0FF8FB
-		binclude	"data\sounds\sfx_CC.snd"
+		binclude	"sound/sfx_CC.snd"
 Sfx_CD:								   ; Offset_0x0FF935
-		binclude	"data\sounds\sfx_CD.snd"
+		binclude	"sound/sfx_CD.snd"
 Sfx_CE:								   ; Offset_0x0FF942
-		binclude	"data\sounds\sfx_CE.snd"
+		binclude	"sound/sfx_CE.snd"
 Sfx_CF:								   ; Offset_0x0FF957
-		binclude	"data\sounds\sfx_CF.snd"
+		binclude	"sound/sfx_CF.snd"
 Sfx_D0:								   ; Offset_0x0FF98E
-		binclude	"data\sounds\sfx_D0.snd"
+		binclude	"sound/sfx_D0.snd"
 Sfx_D1:								   ; Offset_0x0FF9C1
-		binclude	"data\sounds\sfx_D1.snd"
+		binclude	"sound/sfx_D1.snd"
 Sfx_D2:								   ; Offset_0x0FF9FA
-		binclude	"data\sounds\sfx_D2.snd"
+		binclude	"sound/sfx_D2.snd"
 Sfx_D3:								   ; Offset_0x0FFA37
-		binclude	"data\sounds\sfx_D3.snd"
+		binclude	"sound/sfx_D3.snd"
 Sfx_D4:								   ; Offset_0x0FFA76
-		binclude	"data\sounds\sfx_D4.snd"
+		binclude	"sound/sfx_D4.snd"
 Sfx_D5:								   ; Offset_0x0FFAB7
-		binclude	"data\sounds\sfx_D5.snd"
+		binclude	"sound/sfx_D5.snd"
 Sfx_D6:								   ; Offset_0x0FFAE1
-		binclude	"data\sounds\sfx_D6.snd"
+		binclude	"sound/sfx_D6.snd"
 Sfx_D7:								   ; Offset_0x0FFB26
-		binclude	"data\sounds\sfx_D7.snd"
+		binclude	"sound/sfx_D7.snd"
 Sfx_D8:								   ; Offset_0x0FFB4E
-		binclude	"data\sounds\sfx_D8.snd"
+		binclude	"sound/sfx_D8.snd"
 Sfx_D9:								   ; Offset_0x0FFB78
-		binclude	"data\sounds\sfx_D9.snd"
+		binclude	"sound/sfx_D9.snd"
 Sfx_DA:								   ; Offset_0x0FFBD1
-		binclude	"data\sounds\sfx_DA.snd"
+		binclude	"sound/sfx_DA.snd"
 Sfx_DB:								   ; Offset_0x0FFBFE
-		binclude	"data\sounds\sfx_DB.snd"
+		binclude	"sound/sfx_DB.snd"
 Sfx_DC:								   ; Offset_0x0FFC32
-		binclude	"data\sounds\sfx_DC.snd"
+		binclude	"sound/sfx_DC.snd"
 Sfx_DD:								   ; Offset_0x0FFC79
-		binclude	"data\sounds\sfx_DD.snd"
+		binclude	"sound/sfx_DD.snd"
 Sfx_DE:								   ; Offset_0x0FFCA1
-		binclude	"data\sounds\sfx_DE.snd"
+		binclude	"sound/sfx_DE.snd"
 Sfx_DF:								   ; Offset_0x0FFCDB
-		binclude	"data\sounds\sfx_DF.snd"
+		binclude	"sound/sfx_DF.snd"
 Sfx_E0:								   ; Offset_0x0FFD77
-		binclude	"data\sounds\sfx_E0.snd"
+		binclude	"sound/sfx_E0.snd"
 Sfx_E1:								   ; Offset_0x0FFDB2
-		binclude	"data\sounds\sfx_E1.snd"
+		binclude	"sound/sfx_E1.snd"
 Sfx_E2:								   ; Offset_0x0FFE0F
-		binclude	"data\sounds\sfx_E2.snd"
+		binclude	"sound/sfx_E2.snd"
 Sfx_E3:								   ; Offset_0x0FFE46
-		binclude	"data\sounds\sfx_E3.snd"
+		binclude	"sound/sfx_E3.snd"
 Sfx_E4:								   ; Offset_0x0FFE75
-		binclude	"data\sounds\sfx_E4.snd"
+		binclude	"sound/sfx_E4.snd"
 Sfx_E5:								   ; Offset_0x0FFE9D
-		binclude	"data\sounds\sfx_E5.snd"
+		binclude	"sound/sfx_E5.snd"
 Sfx_E6:								   ; Offset_0x0FFEBE
-		binclude	"data\sounds\sfx_E6.snd"
+		binclude	"sound/sfx_E6.snd"
 Sfx_E7:								   ; Offset_0x0FFEF8
-		binclude	"data\sounds\sfx_E7.snd"
+		binclude	"sound/sfx_E7.snd"
 Sfx_E8:								   ; Offset_0x0FFF19
-		binclude	"data\sounds\sfx_E8.snd"
+		binclude	"sound/sfx_E8.snd"
 Sfx_E9:								   ; Offset_0x0FFF43
-		binclude	"data\sounds\sfx_E9.snd"
+		binclude	"sound/sfx_E9.snd"
 Sfx_EA:								   ; Offset_0x0FFF80
-		binclude	"data\sounds\sfx_EA.snd"
+		binclude	"sound/sfx_EA.snd"
 Sfx_EB:								   ; Offset_0x0FFFAB
-		binclude	"data\sounds\sfx_EB.snd"
+		binclude	"sound/sfx_EB.snd"
 
 	finishBank
 ;===============================================================================

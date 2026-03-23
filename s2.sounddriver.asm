@@ -3476,7 +3476,7 @@ zMusIDPtr_GameOver:	music_metadata	Mus_GameOver
 zMusIDPtr_Continue:	music_metadata	Mus_Continue
 zMusIDPtr_Emerald:	music_metadata	Mus_Emerald
 zMusIDPtr_Credits:	music_metadata	Mus_Credits
-zMusIDPtr_Drowning:	music_metadata	Mus_Drowning
+zMusIDPtr_Countdown:	music_metadata	Mus_Drowning
 zMusIDPtr__End:
 
 zSpedUpTempoTable:

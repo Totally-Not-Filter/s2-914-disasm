@@ -19,9 +19,46 @@ idstart :=	0		; value to add to all IDs
 ; function using these variables
 id function ptr,((ptr-offset)/ptrsize+idstart)
 
-MusID__First =		$81
-MusID_ExtraLife =	$98
-MusID__End =		$A0
+; Music IDs
+offset :=	zMasterPlaylist
+ptrsize :=	1
+idstart :=	$81
+; $80 is reserved for silence, so if you make idstart $80 or less,
+; you may need to insert a dummy zMusIDPtr in the $80 slot
+
+MusID__First = idstart
+MusID_2PResults =		id(zMusIDPtr_2PResults)
+MusID_GHZ =		id(zMusIDPtr_GHZ)
+MusID_DHZ2P =		id(zMusIDPtr_DHZ2P)
+MusID_OOZ2 =		id(zMusIDPtr_OOZ2)
+MusID_MTZ =		id(zMusIDPtr_MTZ)
+MusID_HTZ =		id(zMusIDPtr_HTZ)
+MusID_NGHZ =		id(zMusIDPtr_NGHZ)
+MusID_OOZ =		id(zMusIDPtr_OOZ)
+MusID_CNZ =		id(zMusIDPtr_CNZ)
+MusID_DEZ =	id(zMusIDPtr_DEZ)
+MusID_DHZ =	id(zMusIDPtr_DHZ)
+MusID_GHZ2P =	id(zMusIDPtr_GHZ2P)
+MusID_SCZ =		id(zMusIDPtr_SCZ)
+MusID_CPZ =		id(zMusIDPtr_CPZ)
+MusID_SFZ =		id(zMusIDPtr_SFZ)
+MusID_HPZ =		id(zMusIDPtr_HPZ)
+MusID_LevelSel =		id(zMusIDPtr_LevelSel)
+MusID_SpecStg =		id(zMusIDPtr_SpecStg)
+MusID_Boss =		id(zMusIDPtr_Boss)
+MusID_FinalBoss =		id(zMusIDPtr_FinalBoss)
+MusID_Ending =		id(zMusIDPtr_Ending)
+MusID_SuperSonic =		id(zMusIDPtr_SuperSonic)
+MusID_Invinc =		id(zMusIDPtr_Invinc)
+MusID_ExtraLife =	id(zMusIDPtr_ExtraLife)
+MusID_Title =		id(zMusIDPtr_Title)
+MusID_ActClear =	id(zMusIDPtr_ActClear)
+MusID_GameOver =	id(zMusIDPtr_GameOver)
+MusID_Continue =	id(zMusIDPtr_Continue)
+MusID_Emerald =		id(zMusIDPtr_Emerald)
+MusID_Credits =		id(zMusIDPtr_Credits)
+MusID_Countdown =	id(zMusIDPtr_Countdown)
+MusID__End =		id(zMusIDPtr__End)
 
 SndID__First =		$A0
 SndID_PushBlock =	$A7		; A7

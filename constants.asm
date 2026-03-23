@@ -60,6 +60,10 @@ MusID_Credits =		id(zMusIDPtr_Credits)
 MusID_Countdown =	id(zMusIDPtr_Countdown)
 MusID__End =		id(zMusIDPtr__End)
 
+; Whenever the music references a slot that was its placement in Sonic 1
+S1SndID_Waterfall =	$D0
+S1MusID_Stop =		$E0
+
 SndID__First =		$A0
 SndID_PushBlock =	$A7		; A7
 SndID_Ring =		$B5		; B5
@@ -212,38 +216,6 @@ NGHz_Ship_Boost_Pos_X		   equ $001C
 NGHz_Ship_Boost_Pos_Y		   equ $001E
 
 OOz_Robotnik_Pos_X			   equ $0010
-
-; Level Select Text
-_0 = $00
-_1 = $01
-_2 = $02
-_A = $11
-_B = $12
-_C = $13
-_D = $14
-_E = $15
-_F = $16
-_G = $17
-_H = $18
-_I = $19
-_J = $1A
-_K = $1B
-_L = $1C
-_M = $1D
-_N = $1E
-_O = $1F
-_P = $20
-_Q = $21
-_R = $22
-_S = $23
-_T = $24
-_U = $25
-_V = $26
-_W = $27
-_X = $28
-_Y = $0F
-_Z = $10
-__ = $FF
 
 ; Title Card Letters
 TC_A						   equ $0004

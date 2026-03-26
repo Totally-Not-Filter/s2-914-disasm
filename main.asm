@@ -32692,18 +32692,12 @@ MusicPoint1:	startBank
 		music_ptr	Mus_HPZ			; $90
 		music_ptr	Mus_Drowning	; $9F
 		music_ptr	Mus_Credits		; $9E
-Mus_ExtraLife:							   ; Offset_0x0F000C
-		include	"sound/music/98 - Extra Life.asm"
-Mus_Continue:						   ; Offset_0x0F00F9
-		include	"sound/music/9C - Continue.asm"
-Mus_Emerald:							   ; Offset_0x0F0256
-		include	"sound/music/9D - Got Emerald.asm"
-Mus_HPZ:					   ; Offset_0x0F0324
-		include	"sound/music/90 - HPZ.asm"
-Mus_Drowning:						   ; Offset_0x0F0583
-		include	"sound/music/9F - Drowning.asm"
-Mus_Credits:						   ; Offset_0x0F06AD
-		include	"sound/music/9E - Credits.asm"
+Mus_ExtraLife:	include	"sound/music/98 - Extra Life.asm"
+Mus_Continue:	include	"sound/music/9C - Continue.asm"
+Mus_Emerald:	include	"sound/music/9D - Got Emerald.asm"
+Mus_HPZ:	include	"sound/music/90 - HPZ.asm"
+Mus_Drowning:	include	"sound/music/9F - Drowning.asm"
+Mus_Credits:include	"sound/music/9E - Credits.asm"
 
 	finishBank
 ; ----------------------------------------------------------------------------------
@@ -32756,56 +32750,31 @@ MusicPoint2:	startBank
 		music_ptr	Mus_Title		; $99
 		music_ptr	Mus_ActClear	; $9A
 		music_ptr	Mus_GameOver	; $9B
-Mus_OOZ:						   ; Offset_0x0F8032
-		include	"sound/music/88 - CNZ 2P.asm"
-Mus_GHZ:							   ; Offset_0x0F85B4
-		include	"sound/music/82 - EHZ.asm"
-Mus_MTZ:							   ; Offset_0x0F8D26
-		include	"sound/music/85 - MTZ.asm"
-Mus_CNZ:							   ; Offset_0x0F92A1
-		include	"sound/music/89 - CNZ.asm"
-Mus_DHZ:							   ; Offset_0x0F99BE
-		include	"sound/music/8B - MCZ.asm"
-Mus_DHZ2P:					   ; Offset_0x0FA05E
-		include	"sound/music/83 - MCZ 2P.asm"
-Mus_NGHZ:						   ; Offset_0x0FA541
-		include	"sound/music/87 - ARZ.asm"
-Mus_DEZ:							   ; Offset_0x0FACCE
-		include	"sound/music/8A - DEZ.asm"
-Mus_SpecStg:						   ; Offset_0x0FB1B5
-		include	"sound/music/92 - Special Stage.asm"
-Mus_LevelSel:					   ; Offset_0x0FB7BC
-		include	"sound/music/91 - Options.asm"
-Mus_Ending:							   ; Offset_0x0FB937
-		include	"sound/music/95 - Ending.asm"
-Mus_FinalBoss:							   ; Offset_0x0FBF30
-		include	"sound/music/94 - Final Boss.asm"
-Mus_CPZ:						   ; Offset_0x0FC268
-		include	"sound/music/8E - CPZ.asm"
-Mus_Boss:							   ; Offset_0x0FC8B3
-		include	"sound/music/93 - Boss.asm"
-Mus_SCZ:							   ; Offset_0x0FCB85
-		include	"sound/music/8D - SCZ.asm"
-Mus_OOZ2:						   ; Offset_0x0FCF88
-		include	"sound/music/84 - OOZ.asm"
-Mus_SFZ:							   ; Offset_0x0FD40C
-		include	"sound/music/8F - WFZ.asm"
-Mus_GHZ2P:				   ; Offset_0x0FD839
-		include	"sound/music/8C - EHZ 2P.asm"
-Mus_2PResults:					   ; Offset_0x0FDD52
-		include	"sound/music/81 - 2 Player Menu.asm"
-Mus_SuperSonic:							   ; Offset_0x0FE1B5
-		include	"sound/music/96 - Super Sonic.asm"
-Mus_HTZ:						   ; Offset_0x0FE4A8
-		include	"sound/music/86 - HTZ.asm"
-Mus_Invinc:						   ; Offset_0x0FE930
-		include	"sound/music/97 - Invincible.asm"
-Mus_Title:							   ; Offset_0x0FEAFB
-		include	"sound/music/99 - Title Screen.asm"
-Mus_ActClear:						   ; Offset_0x0FECED
-		include	"sound/music/9A - End of Act.asm"
-Mus_GameOver:					   ; Offset_0x0FEE42
-		include	"sound/music/9B - Game Over.asm"
+Mus_OOZ:	include	"sound/music/88 - CNZ 2P.asm"
+Mus_GHZ:	include	"sound/music/82 - EHZ.asm"
+Mus_MTZ:	include	"sound/music/85 - MTZ.asm"
+Mus_CNZ:	include	"sound/music/89 - CNZ.asm"
+Mus_DHZ:	include	"sound/music/8B - MCZ.asm"
+Mus_DHZ2P:	include	"sound/music/83 - MCZ 2P.asm"
+Mus_NGHZ:	include	"sound/music/87 - ARZ.asm"
+Mus_DEZ:	include	"sound/music/8A - DEZ.asm"
+Mus_SpecStg:	include	"sound/music/92 - Special Stage.asm"
+Mus_LevelSel:	include	"sound/music/91 - Options.asm"
+Mus_Ending:	include	"sound/music/95 - Ending.asm"
+Mus_FinalBoss:	include	"sound/music/94 - Final Boss.asm"
+Mus_CPZ:	include	"sound/music/8E - CPZ.asm"
+Mus_Boss:	include	"sound/music/93 - Boss.asm"
+Mus_SCZ:	include	"sound/music/8D - SCZ.asm"
+Mus_OOZ2:	include	"sound/music/84 - OOZ.asm"
+Mus_SFZ:	include	"sound/music/8F - WFZ.asm"
+Mus_GHZ2P:	include	"sound/music/8C - EHZ 2P.asm"
+Mus_2PResults:	include	"sound/music/81 - 2 Player Menu.asm"
+Mus_SuperSonic:	include	"sound/music/96 - Super Sonic.asm"
+Mus_HTZ:	include	"sound/music/86 - HTZ.asm"
+Mus_Invinc:	include	"sound/music/97 - Invincible.asm"
+Mus_Title:	include	"sound/music/99 - Title Screen.asm"
+Mus_ActClear:	include	"sound/music/9A - End of Act.asm"
+Mus_GameOver:	include	"sound/music/9B - Game Over.asm"
 ;-------------------------------------------------------------------------------
 SoundIndex:						   ; Offset_0x0FEF91
 SndPtr_Jump:		rom_ptr_z80	Sfx_A0

@@ -32834,7 +32834,7 @@ SndPtr_Ring:
 SndPtr_RingRight:	rom_ptr_z80	Sfx_B5
 SndPtr_SpikesMove:	rom_ptr_z80	Sfx_B6
 SndPtr_Rumbling:	rom_ptr_z80	Sfx_B7
-			rom_ptr_z80	Sfx_B8
+		rom_ptr_z80	Sfx_B8
 SndPtr_Smash:		rom_ptr_z80	Sfx_B9
 SndPtr_SSGlass:		rom_ptr_z80	Sfx_BA
 SndPtr_DoorSlam:	rom_ptr_z80	Sfx_BB
@@ -32849,7 +32849,7 @@ SndPtr_EnterGiantRing:	rom_ptr_z80	Sfx_C3
 SndPtr_BossExplosion:	rom_ptr_z80	Sfx_C4
 SndPtr_TallyEnd:	rom_ptr_z80	Sfx_C5
 SndPtr_RingSpill:	rom_ptr_z80	Sfx_C6
-			rom_ptr_z80	Sfx_C7
+		rom_ptr_z80	Sfx_C7
 SndPtr_Flamethrower:	rom_ptr_z80	Sfx_C8
 SndPtr_Bonus:		rom_ptr_z80	Sfx_C9
 SndPtr_SpecStageEntry:	rom_ptr_z80	Sfx_CA
@@ -32859,8 +32859,8 @@ SndPtr_Blip:		rom_ptr_z80	Sfx_CD
 SndPtr_RingLeft:	rom_ptr_z80	Sfx_CE
 SndPtr_Signpost:	rom_ptr_z80	Sfx_CF
 SndPtr_CNZBossZap:	rom_ptr_z80	Sfx_D0
-			rom_ptr_z80	Sfx_D1
-			rom_ptr_z80	Sfx_D2
+		rom_ptr_z80	Sfx_D1
+		rom_ptr_z80	Sfx_D2
 SndPtr_Signpost2P:	rom_ptr_z80	Sfx_D3
 SndPtr_OOZLidPop:	rom_ptr_z80	Sfx_D4
 SndPtr_SlidingSpike:	rom_ptr_z80	Sfx_D5
@@ -32889,160 +32889,89 @@ SndPtr_SpindashRev:	rom_ptr_z80	Sfx_E0
 		rom_ptr_z80 Sfx_EB
 SndPtr__End:
 
-Sfx_A0:								   ; Offset_0x0FF029
-		binclude	"sound/SFX/sfx_A0.snd"
-Sfx_A1:								   ; Offset_0x0FF03F
-		binclude	"sound/SFX/sfx_A1.snd"
-Sfx_A2:								   ; Offset_0x0FF069
-		binclude	"sound/SFX/sfx_A2.snd"
-Sfx_A3:								   ; Offset_0x0FF088
-		binclude	"sound/SFX/sfx_A3.snd"
-Sfx_A4:								   ; Offset_0x0FF0BA
-		binclude	"sound/SFX/sfx_A4.snd"
-Sfx_A5:								   ; Offset_0x0FF0EF
-		binclude	"sound/SFX/sfx_A5.snd"
-Sfx_A6:								   ; Offset_0x0FF11B
-		binclude	"sound/SFX/sfx_A6.snd"
-Sfx_A7:								   ; Offset_0x0FF14A
-		binclude	"sound/SFX/sfx_A7.snd"
-Sfx_A8:								   ; Offset_0x0FF179
-		binclude	"sound/SFX/sfx_A8.snd"
-Sfx_A9:								   ; Offset_0x0FF193
-		binclude	"sound/SFX/sfx_A9.snd"
-Sfx_AA:								   ; Offset_0x0FF1A5
-		binclude	"sound/SFX/sfx_AA.snd"
-Sfx_AB:								   ; Offset_0x0FF1E6
-		binclude	"sound/SFX/sfx_AB.snd"
-Sfx_AC:								   ; Offset_0x0FF205
-		binclude	"sound/SFX/sfx_AC.snd"
-Sfx_AD:								   ; Offset_0x0FF239
-		binclude	"sound/SFX/sfx_AD.snd"
-Sfx_AE:								   ; Offset_0x0FF26F
-		binclude	"sound/SFX/sfx_AE.snd"
-Sfx_AF:								   ; Offset_0x0FF2B9
-		binclude	"sound/SFX/sfx_AF.snd"
-Sfx_B0:								   ; Offset_0x0FF2E6
-		binclude	"sound/SFX/sfx_B0.snd"
-Sfx_B1:								   ; Offset_0x0FF317
-		binclude	"sound/SFX/sfx_B1.snd"
-Sfx_B2:								   ; Offset_0x0FF343
-		binclude	"sound/SFX/sfx_B2.snd"
-Sfx_B3:								   ; Offset_0x0FF392
-		binclude	"sound/SFX/sfx_B3.snd"
-Sfx_B4:								   ; Offset_0x0FF3C3
-		binclude	"sound/SFX/sfx_B4.snd"
-Sfx_B5:								   ; Offset_0x0FF41E
-		binclude	"sound/SFX/sfx_B5.snd"
-Sfx_B6:								   ; Offset_0x0FF433
-		binclude	"sound/SFX/sfx_B6.snd"
-Sfx_B7:								   ; Offset_0x0FF450
-		binclude	"sound/SFX/sfx_B7.snd"
-Sfx_B8:								   ; Offset_0x0FF48B
-		binclude	"sound/SFX/sfx_B8.snd"
-Sfx_B9:								   ; Offset_0x0FF4A8
-		binclude	"sound/SFX/sfx_B9.snd"
-Sfx_BA:								   ; Offset_0x0FF4F2
-		binclude	"sound/SFX/sfx_BA.snd"
-Sfx_BB:								   ; Offset_0x0FF51A
-		binclude	"sound/SFX/sfx_BB.snd"
-Sfx_BC:								   ; Offset_0x0FF545
-		binclude	"sound/SFX/sfx_BC.snd"
-Sfx_BD:								   ; Offset_0x0FF586
-		binclude	"sound/SFX/sfx_BD.snd"
-Sfx_BE:								   ; Offset_0x0FF5D9
-		binclude	"sound/SFX/sfx_BE.snd"
-Sfx_BF:								   ; Offset_0x0FF613
-		binclude	"sound/SFX/sfx_BF.snd"
-Sfx_C0:								   ; Offset_0x0FF685
-		binclude	"sound/SFX/sfx_C0.snd"
-Sfx_C1:								   ; Offset_0x0FF6B3
-		binclude	"sound/SFX/sfx_C1.snd"
-Sfx_C2:								   ; Offset_0x0FF6ED
-		binclude	"sound/SFX/sfx_C2.snd"
-Sfx_C3:								   ; Offset_0x0FF6FE
-		binclude	"sound/SFX/sfx_C3.snd"
-Sfx_C4:								   ; Offset_0x0FF778
-		binclude	"sound/SFX/sfx_C4.snd"
-Sfx_C5:								   ; Offset_0x0FF7A0
-		binclude	"sound/SFX/sfx_C5.snd"
-Sfx_C6:								   ; Offset_0x0FF807
-		binclude	"sound/SFX/sfx_C6.snd"
-Sfx_C7:								   ; Offset_0x0FF82F
-		binclude	"sound/SFX/sfx_C7.snd"
-Sfx_C8:								   ; Offset_0x0FF85D
-		binclude	"sound/SFX/sfx_C8.snd"
-Sfx_C9:								   ; Offset_0x0FF86E
-		binclude	"sound/SFX/sfx_C9.snd"
-Sfx_CA:								   ; Offset_0x0FF89B
-		binclude	"sound/SFX/sfx_CA.snd"
-Sfx_CB:								   ; Offset_0x0FF8C8
-		binclude	"sound/SFX/sfx_CB.snd"
-Sfx_CC:								   ; Offset_0x0FF8FB
-		binclude	"sound/SFX/sfx_CC.snd"
-Sfx_CD:								   ; Offset_0x0FF935
-		binclude	"sound/SFX/sfx_CD.snd"
-Sfx_CE:								   ; Offset_0x0FF942
-		binclude	"sound/SFX/sfx_CE.snd"
-Sfx_CF:								   ; Offset_0x0FF957
-		binclude	"sound/SFX/sfx_CF.snd"
-Sfx_D0:								   ; Offset_0x0FF98E
-		binclude	"sound/SFX/sfx_D0.snd"
-Sfx_D1:								   ; Offset_0x0FF9C1
-		binclude	"sound/SFX/sfx_D1.snd"
-Sfx_D2:								   ; Offset_0x0FF9FA
-		binclude	"sound/SFX/sfx_D2.snd"
-Sfx_D3:								   ; Offset_0x0FFA37
-		binclude	"sound/SFX/sfx_D3.snd"
-Sfx_D4:								   ; Offset_0x0FFA76
-		binclude	"sound/SFX/sfx_D4.snd"
-Sfx_D5:								   ; Offset_0x0FFAB7
-		binclude	"sound/SFX/sfx_D5.snd"
-Sfx_D6:								   ; Offset_0x0FFAE1
-		binclude	"sound/SFX/sfx_D6.snd"
-Sfx_D7:								   ; Offset_0x0FFB26
-		binclude	"sound/SFX/sfx_D7.snd"
-Sfx_D8:								   ; Offset_0x0FFB4E
-		binclude	"sound/SFX/sfx_D8.snd"
-Sfx_D9:								   ; Offset_0x0FFB78
-		binclude	"sound/SFX/sfx_D9.snd"
-Sfx_DA:								   ; Offset_0x0FFBD1
-		binclude	"sound/SFX/sfx_DA.snd"
-Sfx_DB:								   ; Offset_0x0FFBFE
-		binclude	"sound/SFX/sfx_DB.snd"
-Sfx_DC:								   ; Offset_0x0FFC32
-		binclude	"sound/SFX/sfx_DC.snd"
-Sfx_DD:								   ; Offset_0x0FFC79
-		binclude	"sound/SFX/sfx_DD.snd"
-Sfx_DE:								   ; Offset_0x0FFCA1
-		binclude	"sound/SFX/sfx_DE.snd"
-Sfx_DF:								   ; Offset_0x0FFCDB
-		binclude	"sound/SFX/sfx_DF.snd"
-Sfx_E0:								   ; Offset_0x0FFD77
-		binclude	"sound/SFX/sfx_E0.snd"
-Sfx_E1:								   ; Offset_0x0FFDB2
-		binclude	"sound/SFX/sfx_E1.snd"
-Sfx_E2:								   ; Offset_0x0FFE0F
-		binclude	"sound/SFX/sfx_E2.snd"
-Sfx_E3:								   ; Offset_0x0FFE46
-		binclude	"sound/SFX/sfx_E3.snd"
-Sfx_E4:								   ; Offset_0x0FFE75
-		binclude	"sound/SFX/sfx_E4.snd"
-Sfx_E5:								   ; Offset_0x0FFE9D
-		binclude	"sound/SFX/sfx_E5.snd"
-Sfx_E6:								   ; Offset_0x0FFEBE
-		binclude	"sound/SFX/sfx_E6.snd"
-Sfx_E7:								   ; Offset_0x0FFEF8
-		binclude	"sound/SFX/sfx_E7.snd"
-Sfx_E8:								   ; Offset_0x0FFF19
-		binclude	"sound/SFX/sfx_E8.snd"
-Sfx_E9:								   ; Offset_0x0FFF43
-		binclude	"sound/SFX/sfx_E9.snd"
-Sfx_EA:								   ; Offset_0x0FFF80
-		binclude	"sound/SFX/sfx_EA.snd"
-Sfx_EB:								   ; Offset_0x0FFFAB
-		binclude	"sound/SFX/sfx_EB.snd"
+Sfx_A0:		include	"sound/SFX/A0 - Jump.asm"
+Sfx_A1:		include	"sound/SFX/A1 - Lamppost.asm"
+Sfx_A2:		include	"sound/SFX/A2 - Spike Switch.asm"
+Sfx_A3:		include	"sound/SFX/A3 - Death.asm"
+Sfx_A4:		include	"sound/SFX/A4 - Skid.asm"
+Sfx_A5:		include	"sound/SFX/A5 - Block Push.asm"
+Sfx_A6:		include	"sound/SFX/A6 - Hit Spikes.asm"
+Sfx_A7:		include	"sound/SFX/A7 - Push Block.asm"
+Sfx_A8:		include	"sound/SFX/A8 - SS Goal.asm"
+Sfx_A9: 	include	"sound/SFX/A9 - SS Item.asm"
+Sfx_AA: 	include	"sound/SFX/AA - Splash.asm"
+Sfx_AB:		include	"sound/SFX/AB.asm"
+Sfx_AC:		include	"sound/SFX/AC - Hit Boss.asm"
+Sfx_AD:		include	"sound/SFX/AD - Get Bubble.asm"
+Sfx_AE: 	include	"sound/SFX/AE - Fireball.asm"
+Sfx_AF: 	include	"sound/SFX/AF - Shield.asm"
+Sfx_B0: 	include	"sound/SFX/B0 - Saw.asm"
+Sfx_B1: 	include	"sound/SFX/B1 - Electric.asm"
+Sfx_B2: 	include	"sound/SFX/B2 - Drown Death.asm"
+Sfx_B3: 	include	"sound/SFX/B3 - Flamethrower.asm"
+Sfx_B4: 	include	"sound/SFX/B4 - Bumper.asm"
+Sfx_B5: 	include	"sound/SFX/B5 - Ring.asm"
+Sfx_B6: 	include	"sound/SFX/B6 - Spikes Move.asm"
+Sfx_B7: 	include	"sound/SFX/B7 - Rumbling.asm"
+Sfx_B8: 	include	"sound/SFX/B8.asm"
+Sfx_B9: 	include	"sound/SFX/B9 - Collapse.asm"
+Sfx_BA: 	include	"sound/SFX/BA - SS Glass.asm"
+Sfx_BB: 	include	"sound/SFX/BB - Door.asm"
+Sfx_BC: 	include	"sound/SFX/BC - Teleport.asm"
+Sfx_BD: 	include	"sound/SFX/BD - ChainStomp.asm"
+Sfx_BE: 	include	"sound/SFX/BE - Roll.asm"
+Sfx_BF: 	include	"sound/SFX/BF - Get Continue.asm"
+Sfx_C0: 	include	"sound/SFX/C0 - Basaran Flap.asm"
+Sfx_C1: 	include	"sound/SFX/C1 - Break Item.asm"
+Sfx_C2: 	include	"sound/SFX/C2 - Drown Warning.asm"
+Sfx_C3: 	include	"sound/SFX/C3 - Giant Ring.asm"
+Sfx_C4: 	include	"sound/SFX/C4 - Bomb.asm"
+Sfx_C5: 	include	"sound/SFX/C5 - Cash Register.asm"
+Sfx_C6: 	include	"sound/SFX/C6 - Ring Loss.asm"
+Sfx_C7: 	include	"sound/SFX/C7 - Chain Rising.asm"
+Sfx_C8: 	include	"sound/SFX/C8 - Burning.asm"
+Sfx_C9: 	include	"sound/SFX/C9 - Hidden Bonus.asm"
+Sfx_CA: 	include	"sound/SFX/CA - Enter SS.asm"
+Sfx_CB: 	include	"sound/SFX/CB - Wall Smash.asm"
+Sfx_CC: 	include	"sound/SFX/CC - Spring.asm"
+Sfx_CD: 	include	"sound/SFX/CD - Switch.asm"
+Sfx_CE: 	include	"sound/SFX/CE - Ring Left Speaker.asm"
+Sfx_CF: 	include	"sound/SFX/CF - Signpost.asm"
+Sfx_D0:		include	"sound/SFX/D0 - CNZ Boss Zap.asm"
+Sfx_D1:		include	"sound/SFX/D1 - Unknown (Unused).asm"
+Sfx_D2:		include	"sound/SFX/D2 - Unknown (Unused).asm"
+Sfx_D3:		include	"sound/SFX/D3 - Signpost 2P.asm"
+Sfx_D4:		include	"sound/SFX/D4 - OOZ Lid Pop.asm"
+Sfx_D5:		include	"sound/SFX/D5 - Sliding Spike.asm"
+Sfx_D6:		include	"sound/SFX/D6 - CNZ Elevator.asm"
+Sfx_D7:		include	"sound/SFX/D7 - Platform Knock.asm"
+Sfx_D8:		include	"sound/SFX/D8 - Bonus Bumper.asm"
+Sfx_D9:		include	"sound/SFX/D9 - Large Bumper.asm"
+Sfx_DA:		include	"sound/SFX/DA - Gloop.asm"
+Sfx_DB:		include "sound/sfx/DB - Pre-Arrow Firing.asm"
+Sfx_DC:		include "sound/sfx/DC - Fire.asm"
+Sfx_DD:		include	"sound/SFX/DD - Arrow Stick.asm"
+Sfx_DE:		include	"sound/SFX/DE - Helicopter.asm"
+Sfx_DF:		include	"sound/SFX/DF - Super Transform.asm"
+Sfx_E0:		include	"sound/SFX/E0 - Spin Dash Rev.asm"
+Sfx_E1:		include	"sound/SFX/E1 - Rumbling 2.asm"
+Sfx_E2:		include	"sound/SFX/E2 - CNZ Launch.asm"
+Sfx_E3:		include	"sound/SFX/E3 - Flipper.asm"
+Sfx_E4:		include	"sound/SFX/E4 - HTZ Lift Click.asm"
+Sfx_E5:		include	"sound/SFX/E5 - Leaves.asm"
+Sfx_E6:		include "sound/sfx/E6 - Mega Mack Drop.asm"
+Sfx_E7:		include "sound/sfx/E7 - Drawbridge Move.asm"
+Sfx_E8:		include "sound/sfx/E8 - Quick Door Slam.asm"
+Sfx_E9:		include "sound/sfx/E9 - Drawbridge Down.asm"
+Sfx_EA:		include "sound/sfx/EA - Laser Burst.asm"
+Sfx_EB:		include "sound/sfx/EB - Scatter.asm"
 
 	finishBank
+
+	if PaddingOptimization=0
+		cnop	-1,2<<lastbit(*-1)
+		even
+	endif
 ;===============================================================================
 ; Rotina para carregar o driver de som
 ; <<<-

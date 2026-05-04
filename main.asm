@@ -114,9 +114,9 @@ SonicDriverVer = 2 ; Tell SMPS2ASM that we are targetting Sonic 2's sound driver
 		dc.l	ErrorTrap		; Unused (reserved)
 		dc.l	ErrorTrap		; Unused (reserved)
 Console:
-		dc.b	"SEGA MEGA DRIVE (C)"
+		dc.b	"SEGA MEGA DRIVE "
 Date:
-		dc.b	"SEGA 1991.APR"
+		dc.b	"(C)SEGA 1991.APR"
 Title_Local:
 		dc.b	"SONIC THE             HEDGEHOG 2                "
 Title_International:
